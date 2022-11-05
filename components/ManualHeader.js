@@ -1,7 +1,7 @@
 //we can do header.js or header.jsx, they do literally the exact same thing. .jsx means its a react file
 
 // Patrick first showed us this hard way to do all of this functionality for the connect button (This ManualHeader.js file)
-// Then he showed us the easier way (Header.js file)
+// Then he showed us the easier/cheaty way (Header.js file)
 // It's good to first learn how everything works and can be done, then learn the easier ways to do it
 
 import { useMoralis } from "react-moralis"
@@ -23,12 +23,13 @@ export default function ManualHeader() {
     //isWeb3Enabled. Keeps track of whether of not our wallet is connected
     //Account. We'll actually check if there is an account instead, because maybe web3 is connected but they didnt connect it to an account. how?
 
-    //UseEffect hook: Core react hook, one of the most popular along with "UseState" hooks.
+    //UseEffect hook:
+    //Core react hook, one of the most popular along with "UseState" hooks.
     //we'll use this hook so that when we render (refresh) it automatically checks to see if we're connected, so the connect button doesnt turn
     //to connect again even tho we're already connected, because it doesn't know if we're connected or not.
     // useEffect(() => {}, []) we have a function called useEffect() that takes 2 parameters.
     // A function as its 1st parameter and 2nd it optionally takes a dependency array [].
-    // What this useEffect does is its gonna keep checking the values in this dependency array, and if anything there changes, its gonna call the
+    // What this useEffect() does is its gonna keep checking the values in this dependency array, and if anything there changes, its gonna call the
     // function and then re-render the front end.
     // This useEffect is running all the time, listening.
     // Cheatsheet:
@@ -48,7 +49,7 @@ export default function ManualHeader() {
                 enableWeb3()
                 //with this functionality now, when we refresh it will automatically run enableWeb3() for us which will make the button say "connected" if
                 //we are connected. Before we had to click the button every time we refreshed for it to say "connected" even tho we were already connected, and
-                //if we didnt use this localStorage, it would pop the wallet window automatically if you just joined the server and you hadn't connected yet.
+                //if we didnt use this localStorage, it would pop the wallet window automatically if you just joined the platform and you hadn't connected yet.
             }
         }
     }, [isWeb3Enabled])
