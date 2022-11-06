@@ -3,7 +3,7 @@
 // It's good to first learn how everything works and can be done, then learn the easier ways to do it
 import { ConnectButton } from "web3uikit"
 
-//This ConnectButton does everything our ManualHeader button does!!
+//This ConnectButton does everything our ManualHeader button does!! Its ridiculous
 
 //"moralisAuth={false}" again just making clear we're not trying to connect to a server
 export default function Header() {
