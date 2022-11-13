@@ -1,8 +1,8 @@
 //we can do header.js or header.jsx, they do literally the exact same thing. .jsx means its a react file
 
-// Patrick first showed us this hard way to do all of this functionality for the connect button (This ManualHeader.js file)
+// Patrick first showed this hard way to do all of this functionality for the connect button (This ManualHeader.js file)
 // Then he showed us the easier/cheaty way (Header.js file)
-// It's good to first learn how everything works and can be done, then learn the easier ways to do it
+// It's good that we first learned here how everything works and can be done, then learn the easier way to do it
 
 import { useMoralis } from "react-moralis"
 import { useEffect } from "react"

@@ -1,13 +1,15 @@
 import "../styles/globals.css"
 import { MoralisProvider } from "react-moralis"
+import { NotificationProvider } from "web3uikit" //we need to wrap our component with this NotificationProvider to add notifications from web3uikit
 
 //this initializeOnMount={false}, is us rejecting the optionality of Moralis to hook into a server to add some more features to our website.
-//we dont want to hook into a server for this app, we dont need aditional functionality.
-//This is the way I think we connect to our centralized database to make api calls, which would make our app a little centralized.
+//This is the way I think we connect to our centralized database to make api calls, which would make this app a little centralized.
 function MyApp({ Component, pageProps }) {
     return (
         <MoralisProvider initializeOnMount={false}>
-            <Component {...pageProps} />
+            <NotificationProvider>
+                <Component {...pageProps} />
+            </NotificationProvider>
         </MoralisProvider>
     )
 }
