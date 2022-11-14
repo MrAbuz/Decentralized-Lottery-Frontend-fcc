@@ -22,6 +22,8 @@ export default function LotteryEntrance() {
     //we created a useState hook to re-render the frontend when we obtain the value and immediately update it in the frontend
     //it renders when we set its value with setEntranceFee
     const [entranceFee, setEntranceFee] = useState("0")
+    const [numPlayers, setNumPlayers] = useState("0")
+    const [recentWinner, setRecentWinner] = useState("0")
 
     const dispatch = useNotification() //this dispatch is that little popup notification. Had to import and add it as a wrapped around component in the app.js file
 
@@ -42,17 +44,40 @@ export default function LotteryEntrance() {
         params: {}, //there are no params
     })
 
+    const { runContractFunction: getNumberOfPlayers } = useWeb3Contract({
+        abi: abi,
+        contractAddress: raffleAddress,
+        functionName: "getNumberOfPlayers",
+        params: {}, //there are no params
+    })
+
+    const { runContractFunction: getRecentWinner } = useWeb3Contract({
+        abi: abi,
+        contractAddress: raffleAddress,
+        functionName: "getRecentWinner",
+        params: {}, //there are no params
+    })
+
+    async function updateUI() {
+        //this await getEntranceFee() comes in hex, good thing is to console.log() to find out
+        const entranceFeeFromCall = (
+            await getEntranceFee({ onError: (error) => console.log(error) })
+        ).toString()
+        const numPlayersFromCall = (
+            await getNumberOfPlayers({ onError: (error) => console.log(error) })
+        ).toString()
+        const recentWinnerFromCall = await getRecentWinner({
+            onError: (error) => console.log(error),
+        })
+        //its really good to always add an onError to all our runContractFunction calls, because if any of those calls break we wont know if we dont add it!!
+        setEntranceFee(entranceFeeFromCall)
+        setNumPlayers(numPlayersFromCall)
+        setRecentWinner(recentWinnerFromCall)
+    }
+
     useEffect(() => {
         if (isWeb3Enabled) {
-            //we need to create this function because we need to use the 'await' and useEffect isnt async, so we need to create an async function to do the await and call it
-            async function updateUI() {
-                //this await getEntranceFee() comes in hex, good thing is to console.log() to find out
-                const entranceFeeFromCall = (
-                    await getEntranceFee({ onError: (error) => console.log(error) })
-                ).toString()
-                //its really good to always add an onError to all our runContractFunction calls, because if any of those calls break we wont know if we dont add it!!
-                setEntranceFee(entranceFeeFromCall)
-            }
+            //we needed to create this function because we need to use the 'await' and useEffect isnt async, so we need to create an async function to do the await and call it
             updateUI()
         }
         //the first time that this useEffect runs, isWeb3Enabled is false, so instead of [] we wanna use [isWeb3Enabled] so that when it turns to true we run this section
@@ -62,11 +87,12 @@ export default function LotteryEntrance() {
         //takes the transaction as an input parameter
         await tx.wait(1)
         handleNewNotification(tx)
+        updateUI() //super important.when the transaction goes through,the number of players is not updated cuz it doesnt render.so after .wait(1) we add this updateUI(). So nice!
     }
 
     const handleNewNotification = function () {
         //nice that we can add parameters to variables that were assigned by functions like dispatch, or this one
-        //we can find all this dif parameters of web3uikit to setup our notifications (that we entering as parameters of dispatch) in the link in the end of this code (*)
+        //we can find all this dif parameters of web3uikit to setup our notifications (that we entering as parameters of dispatch) in the link in the end of this code(*)
         //dispatch launches one of this notifications
         dispatch({
             type: "info",
@@ -96,7 +122,9 @@ export default function LotteryEntrance() {
                     >
                         Enter Raffle
                     </button>
-                    Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")} ETH
+                    Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")} ETH Players:
+                    {numPlayers}
+                    Recent Winner: {recentWinner}
                 </div>
             ) : (
                 <div>No Raffle Address Detected</div>
