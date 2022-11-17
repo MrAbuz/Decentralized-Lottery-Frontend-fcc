@@ -140,7 +140,7 @@ export default function LotteryEntrance() {
                     <div>Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")} ETH </div>
                     <div> Players: {numPlayers}</div>
                     <div>Recent Winner: {recentWinner}</div>
-                    <div>Prize: {numPlayers * entranceFeeInEth}</div>
+                    <div>Prize: {numPlayers * entranceFeeInEth} ETH</div>
                 </div>
             ) : (
                 <div>Connect your wallet to the Goerli Testnet </div>
