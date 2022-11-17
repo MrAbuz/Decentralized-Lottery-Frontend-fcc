@@ -25,6 +25,8 @@ export default function LotteryEntrance() {
     const [numPlayers, setNumPlayers] = useState("0")
     const [recentWinner, setRecentWinner] = useState("0")
 
+    const entranceFeeInEth = ethers.utils.formatUnits(entranceFee, "ether")
+
     const dispatch = useNotification() //this dispatch is that little popup notification. Had to import and add it as a wrapped around component in the app.js file
 
     //runContractFunction, which we renamed to enterRaffle, its to include in the html to call this function
@@ -97,7 +99,7 @@ export default function LotteryEntrance() {
 
     const handleNewNotification = function () {
         //nice that we can add parameters to variables that were assigned by functions like dispatch, or this one
-        //we can find all this dif parameters of web3uikit to setup our notifications (that we entering as parameters of dispatch) in the link in the end of this code(*)
+        //(*)we can find all this dif parameters of web3uikit to setup our notifications (that we entering as parameters of dispatch) in the link in the end of this code
         //dispatch launches one of this notifications
         dispatch({
             type: "info",
@@ -117,7 +119,6 @@ export default function LotteryEntrance() {
     // Nice that you can add logic inside <button></button> where it was suposed to be just the name of the button, previously it was just "Enter Raffle" text
     return (
         <div className="p-5">
-            Hi from Lottery entrance!
             {raffleAddress ? (
                 <div className="">
                     <button
@@ -136,12 +137,13 @@ export default function LotteryEntrance() {
                             <div>Enter Raffle</div>
                         )}
                     </button>
-                    Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")} ETH Players:
-                    {numPlayers}
-                    Recent Winner: {recentWinner}
+                    <div>Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")} ETH </div>
+                    <div> Players: {numPlayers}</div>
+                    <div>Recent Winner: {recentWinner}</div>
+                    <div>Prize: {numPlayers * entranceFeeInEth}</div>
                 </div>
             ) : (
-                <div>No Raffle Address Detected</div>
+                <div>Connect your wallet to the Goerli Testnet </div>
             )}
         </div>
     )
