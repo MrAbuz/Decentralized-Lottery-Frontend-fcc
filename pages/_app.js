@@ -15,3 +15,6 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp
+
+//Having MoralisProvider (or others) wrapped around our "Component" means that we don't have to pass parameters between our components or pages.
+//For example our "LotteryEntrance" will know which chainId we're on because our "Header" is gonna pass it to "MoralisProvider" which is gonna pass to the "LotteryEntrance"
