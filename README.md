@@ -15,4 +15,5 @@ And while using our hardhat node, in order to choose a winner because we obvious
 i'm doing "code ." to hardhat-smartcontract-lottery-fcc, and in there running the script: yarn hardhat run scripts/mockOffchain.js --network localhost
 to choose the winner
 
-Like euromilhões but provably and verifiably random lottery
+Give life to this with style, showing its an improved version of Euromillion
+Euromillion but provably and verifiably random lottery
